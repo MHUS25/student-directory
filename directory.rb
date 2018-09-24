@@ -8,11 +8,22 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    puts "Please enter hobby"
-  hobby = gets.chomp
-      puts "Please enter height"
-  height = gets.chomp
-    students << {name: name, hobby: hobby, height: height, cohort: :november}
+
+    while true do
+      puts "Please enter cohort"
+      cohort = gets.chomp
+      case cohort.downcase
+      when "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"
+        break
+      when ""
+        cohort = "N/A"
+        break
+      else
+        puts "Incorrect spelling"
+      end
+    end
+    students << {name: name, cohort: cohort.to_sym}
+
     puts "Now we have #{students.count} students"
     # get another name from the user
     puts "Please enter name"
@@ -26,10 +37,8 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  count = 0
- until count == students.count
-   puts "#{students[count][:name].center(10)} #{students[count][:hobby].center(10)} #{students[count][:height].center(4)} (#{students[count][:cohort]} cohort)"
-   count += 1
+  students.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 def print_footer(students)
