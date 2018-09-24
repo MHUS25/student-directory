@@ -4,14 +4,14 @@ def input_students
   students = []
   # get the first name
   puts "Please enter name"
-  name = gets.chomp
+  name = gets.strip
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
 
     while true do
       puts "Please enter cohort"
-      cohort = gets.chomp.downcase.capitalize
+      cohort = gets.strip.downcase.capitalize
       case cohort.downcase
       when "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"
         break
@@ -32,7 +32,7 @@ def input_students
 
     # get another name from the user
     puts "Please enter name"
-    name = gets.chomp
+    name = gets.strip
   end
   # return the array of students
  students
