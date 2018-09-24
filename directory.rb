@@ -28,7 +28,7 @@ end
 def print(students)
   count = 0
  until count == students.count
-   puts "#{students[count][:name]} #{students[count][:hobby]} #{students[count][:height]} (#{students[count][:cohort]} cohort)"
+   puts "#{students[count][:name].center(10)} #{students[count][:hobby].center(10)} #{students[count][:height].center(4)} (#{students[count][:cohort]} cohort)"
    count += 1
   end
 end
