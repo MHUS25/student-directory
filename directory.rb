@@ -3,8 +3,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to file"
+  puts "4. Load the list from file"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -27,10 +27,10 @@ def process(selection)
       puts "Showing the students ..."
       show_students
     when "3"
-      puts "Saving the list to students.csv ..."
+      puts "Saving the list to file ..."
       save_students
     when "4"
-      puts "Loading the list from students.csv ..."
+      puts "Loading the list from file..."
       load_students
     when "9"
       puts "Exiting the program ..."
@@ -41,8 +41,11 @@ def process(selection)
 end
 
 def save_students
+  # ask user for filename
+  puts "Enter the name of file you would like to save the data to"
+  filename = gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -56,7 +59,11 @@ def add_to_hash(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
 
-def load_students(filename = "students.csv")
+def load_students
+  # ask user for filename
+  puts "Enter the name of file you would like to load the data from"
+  filename = gets.chomp
+  # open file for reading
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
