@@ -1,17 +1,43 @@
+def interactive_menu
+  students = []
+  loop do
+    # 1. print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" # 9 because we'll be adding more items
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit # this will cause the program to terminate
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
+
 def input_students
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   # get the first name
   puts "Please enter name"
-  name = gets.strip
+  name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
 
     while true do
       puts "Please enter cohort"
-      cohort = gets.strip.downcase.capitalize
+      cohort = gets.chomp.downcase.capitalize
       case cohort.downcase
       when "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"
         break
@@ -32,7 +58,7 @@ def input_students
 
     # get another name from the user
     puts "Please enter name"
-    name = gets.strip
+    name = gets.chomp
   end
   # return the array of students
  students
@@ -70,11 +96,11 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
-students = input_students
+interactive_menu
 if students.count == 0
   puts "There are no students"
 else
 print_header
-print_cohort_groups(students)
+print(students)
 print_footer(students)
 end
