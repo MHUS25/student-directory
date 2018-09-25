@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] # an empty array accessible to all methods
 
 def print_menu
@@ -45,12 +47,17 @@ def save_students
   puts "Enter the name of file you would like to save the data to"
   filename = STDIN.gets.chomp
   # open the file for writing
-  file = File.open("#{filename}", "w") do |file|
-  # iterate over the array of students
+  CSV.open(filename, "a") do |csv|
+    # iterate over the array of students
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+    student_data = [student[:name], student[:cohort]]
+    csv << student_data
+  # file = File.open("#{filename}", "w") do |file|
+  # # iterate over the array of students
+  #   @students.each do |student|
+  #     student_data = [student[:name], student[:cohort]]
+  #     csv_line = student_data.join(",")
+  #     file.puts csv_line
     end
   end
 end
@@ -64,11 +71,14 @@ def load_students
   puts "Enter the name of file you would like to load the data from"
   filename = STDIN.gets.chomp
   # open file for reading
-  file = File.open("#{filename}", "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_to_hash(name, cohort)
-    end
+  CSV.foreach(filename) do |row|
+    name, cohort = row[0], row[1]
+    add_to_hash(name, cohort)
+  # file = File.open("#{filename}", "r") do |file|
+  #   file.readlines.each do |line|
+  #     name, cohort = line.chomp.split(',')
+  #     add_to_hash(name, cohort)
+  #   end
   end
 end
 
