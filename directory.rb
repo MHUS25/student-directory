@@ -79,6 +79,14 @@ def interactive_menu
   end
 end
 
+def print_student_count
+  if @students.count == 1
+    puts "Now we have 1 student"
+  else
+    puts "Now we have #{@students.count} students"
+  end
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -87,8 +95,6 @@ def input_students
   name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array
-
     while true do
       puts "Please enter cohort"
       cohort = STDIN.gets.chomp.downcase.capitalize
@@ -103,13 +109,7 @@ def input_students
       end
     end
     add_to_hash(name, cohort)
-
-    if @students.count == 1
-      puts "Now we have 1 student"
-    else
-      puts "Now we have #{@students.count} students"
-    end
-
+    print_student_count
     # get another name from the user
     puts "Please enter name"
     name = STDIN.gets.chomp
@@ -149,5 +149,4 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-try_load_students
 interactive_menu
