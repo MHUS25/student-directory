@@ -47,11 +47,15 @@ def save_students
   file.close
 end
 
+def add_to_hash(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  add_to_hash(name, cohort)
   end
   file.close
 end
@@ -98,7 +102,7 @@ def input_students
         puts "Incorrect spelling"
       end
     end
-    @students << {name: name, cohort: cohort}
+    add_to_hash(name, cohort)
 
     if @students.count == 1
       puts "Now we have 1 student"
@@ -145,5 +149,4 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-try_load_students
 interactive_menu
