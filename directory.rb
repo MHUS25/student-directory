@@ -71,6 +71,10 @@ def print_footer(students)
 end
 
 students = input_students
+if students.count == 0
+  puts "There are no students"
+else
 print_header
 print_cohort_groups(students)
 print_footer(students)
+end
