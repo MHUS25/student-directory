@@ -1,33 +1,46 @@
-def interactive_menu
-  students = []
-  loop do
-    # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" # 9 because we'll be adding more items
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
+@students = [] # an empty array accessible to all methods
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit" # 9 because we'll be adding more items
+end
+
+def show_students
+  if @students.count == 0
+    puts "There are no students"
+  else
+  print_header
+  print_students_list()
+  print_footer
+  end
+end
+
+def process(selection)
+  case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
-      exit # this will cause the program to terminate
+      exit
     else
-      puts "I don't know what you meant, try again"
-    end
+      puts "I don't know what you mean, try again"
+  end
+end
+
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
 
 def input_students
+  puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
-  students = []
   # get the first name
   puts "Please enter name"
   name = gets.chomp
@@ -48,37 +61,35 @@ def input_students
         puts "Incorrect spelling"
       end
     end
-    students << {name: name, cohort: cohort}
+    @students << {name: name, cohort: cohort}
 
-    if students.count == 1
+    if @students.count == 1
       puts "Now we have 1 student"
     else
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
     end
 
     # get another name from the user
     puts "Please enter name"
     name = gets.chomp
   end
-  # return the array of students
- students
 end
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-def print(students)
-  students.each do |student|
+def print_students_list()
+  @students.each do |student|
       puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-def print_cohort_groups(students)
+def print_cohort_groups
 
   sorted_by_cohort = {}
 
-  students.each do |student|
+  @students.each do |student|
   		cohort = student[:cohort]
 
   		name = student[:name]
@@ -92,15 +103,8 @@ def print_cohort_groups(students)
   puts sorted_by_cohort.to_s.tr('{}"">[]', '').gsub!('=', ', ').split(',')
 end
 
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
 interactive_menu
-if students.count == 0
-  puts "There are no students"
-else
-print_header
-print(students)
-print_footer(students)
-end
